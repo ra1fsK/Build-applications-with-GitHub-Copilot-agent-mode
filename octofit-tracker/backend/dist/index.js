@@ -13,10 +13,13 @@ const routes_1 = require("./routes");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = Number(process.env.PORT || 8000);
-const codespaceName = process.env.CODESPACE_NAME;
-const apiBaseUrl = codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : 'http://localhost:8000';
+const getApiBaseUrl = () => {
+    const codespaceName = process.env.CODESPACE_NAME?.trim();
+    return codespaceName
+        ? `https://${codespaceName}-8000.app.github.dev`
+        : 'http://localhost:8000';
+};
+const apiBaseUrl = getApiBaseUrl();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.get('/api/health', (_req, res) => {
