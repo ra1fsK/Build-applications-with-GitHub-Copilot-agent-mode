@@ -4,8 +4,8 @@ const resourceName = 'workouts';
 const apiBaseUrl = (() => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
+    ? `https://${codespaceName}-8000.app.github.dev/api/${resourceName}/`
+    : `http://localhost:8000/api/${resourceName}/`;
 })();
 
 function normalizeResponse(data) {
@@ -26,7 +26,7 @@ function Workouts() {
       setError(null);
 
       try {
-        const response = await fetch(`${apiBaseUrl}/${resourceName}`);
+        const response = await fetch(apiBaseUrl);
         const data = await response.json();
         setItems(normalizeResponse(data));
       } catch (fetchError) {
@@ -42,7 +42,7 @@ function Workouts() {
   return (
     <section className="resource-panel container py-4">
       <h2>Workouts</h2>
-      <p className="text-muted">Using endpoint: <code>{`${apiBaseUrl}/${resourceName}`}</code></p>
+      <p className="text-muted">Using endpoint: <code>{apiBaseUrl}</code></p>
       {loading && <p>Loading workouts...</p>}
       {error && <p className="text-danger">Error loading workouts: {String(error)}</p>}
       {!loading && !error && (

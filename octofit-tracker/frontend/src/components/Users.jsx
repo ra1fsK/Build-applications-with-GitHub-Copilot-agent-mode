@@ -4,8 +4,8 @@ const resourceName = 'users';
 const apiBaseUrl = (() => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
+    ? `https://${codespaceName}-8000.app.github.dev/api/${resourceName}/`
+    : `http://localhost:8000/api/${resourceName}/`;
 })();
 
 function normalizeResponse(data) {
@@ -27,7 +27,7 @@ function Users() {
       setError(null);
 
       try {
-        const response = await fetch(`${apiBaseUrl}/${resourceName}`);
+        const response = await fetch(apiBaseUrl);
         const data = await response.json();
         setItems(normalizeResponse(data));
       } catch (fetchError) {
@@ -43,7 +43,7 @@ function Users() {
   return (
     <section className="resource-panel container py-4">
       <h2>Users</h2>
-      <p className="text-muted">Using endpoint: <code>{`${apiBaseUrl}/${resourceName}`}</code></p>
+      <p className="text-muted">Using endpoint: <code>{apiBaseUrl}</code></p>
       {loading && <p>Loading users...</p>}
       {error && <p className="text-danger">Error loading users: {String(error)}</p>}
       {!loading && !error && (
