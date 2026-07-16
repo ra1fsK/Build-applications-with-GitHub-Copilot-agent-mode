@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-const resourceName = 'teams';
 const apiBaseUrl = (() => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
   return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev/api/${resourceName}/`
-    : `http://localhost:8000/api/${resourceName}/`;
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : 'http://localhost:8000/api/teams/';
 })();
 
 function normalizeResponse(data) {
